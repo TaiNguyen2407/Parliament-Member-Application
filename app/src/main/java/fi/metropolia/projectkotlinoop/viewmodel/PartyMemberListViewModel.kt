@@ -2,7 +2,6 @@ package fi.metropolia.projectkotlinoop.viewmodel
 
 import androidx.lifecycle.*
 import fi.metropolia.projectkotlinoop.MemberRepository
-import fi.metropolia.projectkotlinoop.data.Member
 import fi.metropolia.projectkotlinoop.data.MemberDao
 import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import fi.metropolia.projectkotlinoop.network.MemberApi

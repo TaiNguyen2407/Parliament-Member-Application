@@ -1,7 +1,11 @@
 package fi.metropolia.projectkotlinoop.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity
 data class ParliamentMember(
+        @PrimaryKey
         val hetekaId: Int,
         val seatNumber: Int = 0,
         val lastname: String,

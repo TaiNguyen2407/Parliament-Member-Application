@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.091" />
+        app:layout_constraintVertical_bias="0.073" />
 
     <TextView
         android:id="@+id/party"
@@ -39,7 +39,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.431" />
+        app:layout_constraintVertical_bias="0.419" />
 
     <TextView
         android:id="@+id/hetekaid"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.601" />
+        app:layout_constraintVertical_bias="0.581" />
 
     <TextView
         android:id="@+id/Likes"
@@ -64,7 +64,7 @@
         app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/likeButton"
-        app:layout_constraintVertical_bias="0.361" />
+        app:layout_constraintVertical_bias="0.885" />
 
     <Button
         android:id="@+id/likeButton"
@@ -99,8 +99,43 @@
         android:text="dislikes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.603"
+        app:layout_constraintHorizontal_bias="0.63"
         app:layout_constraintStart_toEndOf="@+id/Likes"
         app:layout_constraintTop_toBottomOf="@+id/dislikeButton"
-        app:layout_constraintVertical_bias="0.014" />
+        app:layout_constraintVertical_bias="0.404" />
+
+    <TextView
+        android:id="@+id/grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="grade"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hetekaid"
+        app:layout_constraintVertical_bias="0.142" />
+
+    <TextView
+        android:id="@+id/numberOfLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/Likes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likeButton"
+        app:layout_constraintVertical_bias="0.166" />
+
+    <TextView
+        android:id="@+id/numberOfDislikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/dislikes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toEndOf="@+id/numberOfLikes"
+        app:layout_constraintTop_toBottomOf="@+id/dislikeButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

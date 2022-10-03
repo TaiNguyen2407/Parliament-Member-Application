@@ -1,7 +1,7 @@
 package fi.metropolia.projectkotlinoop.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import fi.metropolia.projectkotlinoop.data.Member
+import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -19,7 +19,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MemberApiService{
     @GET("seating.json")
-    suspend fun getMemberList(): List<ParliamentParties>
+    suspend fun getMemberList(): List<ParliamentMember>
 }
 
 object MemberApi{

@@ -1,8 +1,9 @@
 package fi.metropolia.projectkotlinoop
 
+import android.nfc.Tag
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.viewModelFactory
-import fi.metropolia.projectkotlinoop.data.Member
 import fi.metropolia.projectkotlinoop.data.MemberDao
 import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import fi.metropolia.projectkotlinoop.data.Parliarment
@@ -19,19 +20,23 @@ class PartyListViewModel(private val memberDao: MemberDao) : ViewModel() {
 
 
     val repository = MemberRepository(memberDao)
-    val partyDisplayed: LiveData<List<String>> = Transformations.distinctUntilChanged(
-        Transformations.map(repository.allParties){list -> list.map { it.party }.toSet().toList()}
-    )
+    val partyDisplayed: LiveData<List<String>> = Transformations.map(repository.allPartiesMembers){
+            list -> list.map {it.party}.toSet().toList()
+    }
+
+
+    fun readParties(){
+        Log.d("Tai", "Hello")
+    }
 
     init {
         getParties()
     }
 
-    private fun getParties(){
+    fun getParties(){
         viewModelScope.launch {
            try {
-               val partyResult = MemberApi.retrofitService.getMemberList()
-               _status.value = partyResult.toString()
+               repository.loadParties()
            } catch (e: Exception){
                _status.value = "Failure: ${e.message}"
            }

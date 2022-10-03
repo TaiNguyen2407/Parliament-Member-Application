@@ -5,9 +5,10 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import fi.metropolia.projectkotlinoop.MemberRepository
 import fi.metropolia.projectkotlinoop.context.MyApp
 
-@Database(entities = [Member::class], version = 1, exportSchema = false)
+@Database(entities = [ParliamentMember::class], version = 2, exportSchema = false)
 abstract class MemberDB: RoomDatabase() {
 
     abstract fun memberDao(): MemberDao
@@ -30,30 +31,11 @@ abstract class MemberDB: RoomDatabase() {
 }
 
 
-@Entity(tableName = "Member")
-data class Member (
-    @PrimaryKey
-    val hetekaId: Int,
-    @ColumnInfo
-    val firstname: String,
-    @ColumnInfo
-    val lastname: String,
-    @ColumnInfo
-    val seatNumber: Int,
-    @ColumnInfo
-    val party: String,
-    @ColumnInfo
-    val minister: Boolean,
-    @ColumnInfo
-    val pictureUrl: String,
-    /*@ColumnInfo
-    val comment: String*/
-)
 
 @Dao
 interface MemberDao {
-    /*@Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(comment: String)*/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(member: List<ParliamentMember>)
 
     /*@Update
     suspend fun update(comment: String)
@@ -61,7 +43,7 @@ interface MemberDao {
     @Delete
     suspend fun delete(comment: String)*/
 
-    @Query("SELECT * from Member")
+    @Query("SELECT * from ParliamentMember")
     fun getAll(): LiveData<List<ParliamentMember>>
 
 }
