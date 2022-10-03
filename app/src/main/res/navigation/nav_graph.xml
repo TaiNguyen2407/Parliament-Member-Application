@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/partyList"
+        android:name="fi.metropolia.projectkotlinoop.fragments.PartyList"
+        android:label="@string/party_list"
+        tools:layout="@layout/fragment_party_list">
+        <action
+            android:id="@+id/action_partyList_to_partyMemberList"
+            app:destination="@id/partyMemberList" />
+        <action
+            android:id="@+id/action_partyList_to_startFragment"
+            app:destination="@id/startFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/partyMemberList"
+        android:name="fi.metropolia.projectkotlinoop.fragments.PartyMemberList"
+        android:label="@string/member_list"
+        tools:layout="@layout/fragment_party_member_list">
+        <action
+            android:id="@+id/action_partyMemberList_to_partyMemberInformation"
+            app:destination="@id/partyMemberInformation" />
+        <action
+            android:id="@+id/action_partyMemberList_to_partyList"
+            app:destination="@id/partyList" />
+        <argument
+            android:name="chosenParty"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/partyMemberInformation"
+        android:name="fi.metropolia.projectkotlinoop.fragments.PartyMemberInformation"
+        android:label="@string/member_information"
+        tools:layout="@layout/fragment_party_member_information" >
+        <action
+            android:id="@+id/action_partyMemberInformation_to_partyMemberList"
+            app:destination="@id/partyMemberList" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="fi.metropolia.projectkotlinoop.fragments.StartApp"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_partyList"
+            app:destination="@id/partyList" />
+    </fragment>
+</navigation>
