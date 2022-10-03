@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://users.metropolia.fi/~peterh/seating.json/"
+private const val BASE_URL = "https://users.metropolia.fi/~peterh/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -19,13 +19,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MemberApiService{
     @GET("seating.json")
-    suspend fun getMemberList(): List<Member>
-
-    @GET("party")
-    suspend fun getParties(): List<ParliamentParties>
-
-    @GET("member")
-    suspend fun getMembers(): List<ParliamentParties>
+    suspend fun getMemberList(): List<ParliamentParties>
 }
 
 object MemberApi{

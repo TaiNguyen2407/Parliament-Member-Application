@@ -15,22 +15,22 @@ class PartyListViewModel(private val memberDao: MemberDao) : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
     // The external immutable LiveData for the request status
-    //val status: LiveData<String> = _status
+    val status: LiveData<String> = _status
 
 
     val repository = MemberRepository(memberDao)
     val partyDisplayed: LiveData<List<String>> = Transformations.distinctUntilChanged(
-        Transformations.map(repository.allParties){list -> list.map { it.party }.toSet().toMutableList()}
+        Transformations.map(repository.allParties){list -> list.map { it.party }.toSet().toList()}
     )
 
     init {
-       getParties()
+        getParties()
     }
 
     private fun getParties(){
         viewModelScope.launch {
            try {
-               val partyResult = MemberApi.retrofitService.getParties()
+               val partyResult = MemberApi.retrofitService.getMemberList()
                _status.value = partyResult.toString()
            } catch (e: Exception){
                _status.value = "Failure: ${e.message}"

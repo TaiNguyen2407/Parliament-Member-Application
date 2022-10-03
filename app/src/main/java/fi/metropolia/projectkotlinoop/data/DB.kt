@@ -65,3 +65,5 @@ interface MemberDao {
     fun getAll(): LiveData<List<ParliamentMember>>
 
 }
+
+

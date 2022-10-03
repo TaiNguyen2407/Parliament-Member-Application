@@ -17,10 +17,13 @@ class PartyMemberListViewModel(private val memberDao: MemberDao) : ViewModel() {
     //val status: LiveData<String> = _status
 
     val respository = MemberRepository(memberDao)
-    val memberDisplayed: LiveData<List<String>> = Transformations.distinctUntilChanged(
-        Transformations.map(respository.allPartiesMembers){list -> list.map { it.firstname + it.lastname}.toSet().toList()}
-    )
+    /*val memberDisplayed: LiveData<List<String>> = Transformations.map(respository.allPartiesMembers){ list ->
+        list.map { it.firstname + " " + it.lastname }.toList()
+    }*/
 
+    init {
+        getMembers()
+    }
 
     private fun getMembers(){
         viewModelScope.launch {

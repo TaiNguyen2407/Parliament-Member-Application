@@ -1,11 +1,14 @@
 package fi.metropolia.projectkotlinoop.fragments
 
+import android.app.ActivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import fi.metropolia.projectkotlinoop.MainActivity
 import fi.metropolia.projectkotlinoop.R
 import fi.metropolia.projectkotlinoop.databinding.FragmentStartBinding
 
@@ -36,6 +39,8 @@ class StartApp : Fragment() {
                 findNavController().navigate(R.id.action_startFragment_to_partyList)
             }
             quitButton.setOnClickListener {
+                System.exit(0)
+                Toast.makeText(requireContext(), "App Closed", Toast.LENGTH_SHORT).show()
             }
         }
     }

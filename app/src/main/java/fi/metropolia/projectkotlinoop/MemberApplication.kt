@@ -6,5 +6,5 @@ import fi.metropolia.projectkotlinoop.data.MemberDB
 
 class MemberApplication: Application() {
     val database: MemberDB by lazy { MemberDB.getDatabase(this) }
-    val repository by lazy { MemberRepository(database.memberDao()) }
+    //val repository by lazy { MemberRepository(database.memberDao()) }
 }
