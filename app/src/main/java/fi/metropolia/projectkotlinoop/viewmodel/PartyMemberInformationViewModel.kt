@@ -1,51 +1,44 @@
 package fi.metropolia.projectkotlinoop.viewmodel
 
+import android.widget.Button
 import androidx.lifecycle.*
 import fi.metropolia.projectkotlinoop.MemberRepository
 import fi.metropolia.projectkotlinoop.data.MemberDao
-import fi.metropolia.projectkotlinoop.data.ParliamentMember
-import fi.metropolia.projectkotlinoop.network.MemberApi
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.lang.IllegalArgumentException
 
-class PartyMemberListViewModel(private val memberDao: MemberDao) : ViewModel() {
+class PartyMemberInformationViewModel(private val memberDao: MemberDao) : ViewModel(){
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
     // The external immutable LiveData for the request status
     val status: LiveData<String> = _status
-
     val repository = MemberRepository(memberDao)
-
-    lateinit var memberDisplayed: LiveData<List<ParliamentMember>>
-
-
-    fun chosenParty(chosenParty: String) {
-        memberDisplayed = Transformations.map(repository.allPartiesMembers){
-            it.filter { it.party == chosenParty }
-        }
+    val hetekaIdDisplayed: LiveData<List<Int>> = Transformations.map(repository.allPartiesMembers){
+        list -> list.map { it.hetekaId }.toSet().toList()
     }
-
+    val partyDisplayed: LiveData<List<String>> = Transformations.map(repository.allPartiesMembers){
+            list -> list.map {it.party}.toSet().toList()
+    }
     init {
-        getMembers()
+        getMemberInformation()
     }
 
-    private fun getMembers(){
+    fun getMemberInformation(){
         viewModelScope.launch {
             try {
                 repository.loadDatabase()
-            } catch (e:Exception){
-                _status.value = "failure: ${e.message}"
+            } catch (e: Exception){
+                _status.value = "Failure ${e.message}"
             }
         }
     }
 }
 
-class PartyMemberListViewModelFactory(private val memberDao: MemberDao) : ViewModelProvider.Factory{
+class PartyMemberInformationViewModelFactory(private val memberDao: MemberDao) : ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PartyMemberListViewModel::class.java)){
-            return PartyMemberListViewModel(memberDao) as T
+            return PartyMemberInformationViewModel(memberDao) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel Class")
+        throw IllegalArgumentException("Unknown Viewmodel Class")
     }
 }

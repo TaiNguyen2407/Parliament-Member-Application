@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_partyMemberInformation_to_partyMemberList"
             app:destination="@id/partyMemberList" />
+        <argument
+            android:name="chosenMember"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"

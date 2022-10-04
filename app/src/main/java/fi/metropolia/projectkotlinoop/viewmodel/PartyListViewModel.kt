@@ -24,11 +24,6 @@ class PartyListViewModel(private val memberDao: MemberDao) : ViewModel() {
             list -> list.map {it.party}.toSet().toList()
     }
 
-
-    fun readParties(){
-        Log.d("Tai", "Hello")
-    }
-
     init {
         getParties()
     }
@@ -36,7 +31,7 @@ class PartyListViewModel(private val memberDao: MemberDao) : ViewModel() {
     fun getParties(){
         viewModelScope.launch {
            try {
-               repository.loadParties()
+               repository.loadDatabase()
            } catch (e: Exception){
                _status.value = "Failure: ${e.message}"
            }

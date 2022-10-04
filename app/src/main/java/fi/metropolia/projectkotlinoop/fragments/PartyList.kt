@@ -56,12 +56,9 @@ class PartyList : Fragment() {
         binding?.partyListRecyclerView?.adapter = adapter
 
         //Code for observe pattern
-        partyListViewModel.partyDisplayed.observe(viewLifecycleOwner){
+        partyListViewModel.partyDisplayed
+            .observe(viewLifecycleOwner){
             adapter.submitList(it)
-        }
-
-        partyListViewModel.status.observe(viewLifecycleOwner){
-            Log.d("Tai", "$it")
         }
 
     }

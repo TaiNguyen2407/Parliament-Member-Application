@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fi.metropolia.projectkotlinoop.MemberApplication
 import fi.metropolia.projectkotlinoop.adapter.PartyMemberListAdapter
+import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import fi.metropolia.projectkotlinoop.databinding.FragmentPartyMemberListBinding
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberListViewModel
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberListViewModelFactory
@@ -56,13 +57,13 @@ class PartyMemberList : Fragment() {
         binding?.partyMemberListRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
         binding?.partyMemberListRecyclerView?.adapter = adapter
 
-        partyMemberListViewModel.respository.allPartiesMembers
+        partyMemberListViewModel.chosenParty(chosenParty)
+
+        partyMemberListViewModel.memberDisplayed
             .observe(viewLifecycleOwner){
-            adapter.submitList(it)
-        }
-
+                adapter.submitList(it)
+            }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         binding = null

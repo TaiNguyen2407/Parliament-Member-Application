@@ -13,12 +13,10 @@ class MemberRepository(private val memberDao: MemberDao) {
     val allPartiesMembers: LiveData<List<ParliamentMember>> = memberDao.getAll()
 
     //function to read database from network
-    suspend fun loadParties() {
+    suspend fun loadDatabase() {
         withContext(Dispatchers.IO) {
             val partyResult = MemberApi.retrofitService.getMemberList()
             memberDao.insertAll(partyResult)
         }
-
-
     }
 }
