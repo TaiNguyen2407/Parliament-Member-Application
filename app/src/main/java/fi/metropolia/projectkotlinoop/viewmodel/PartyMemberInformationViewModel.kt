@@ -1,30 +1,29 @@
 package fi.metropolia.projectkotlinoop.viewmodel
 
-import android.widget.Button
 import androidx.lifecycle.*
 import fi.metropolia.projectkotlinoop.MemberRepository
 import fi.metropolia.projectkotlinoop.data.MemberDao
 import fi.metropolia.projectkotlinoop.data.ParliamentMember
+import fi.metropolia.projectkotlinoop.fragments.PartyMemberInformation
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
+
+enum class MemberApiStatus { LOADING, ERROR, DONE }
+
 
 class PartyMemberInformationViewModel(private val memberDao: MemberDao) : ViewModel(){
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
     // The external immutable LiveData for the request status
     val status: LiveData<String> = _status
-    lateinit var memberDisplayed: LiveData<List<ParliamentMember>>
     val repository = MemberRepository(memberDao)
-
+    private val _photos = MutableLiveData<ParliamentMember>()
+    val photos: LiveData<ParliamentMember> = _photos
+    lateinit var partyMemberInformation: PartyMemberInformation
     init {
         getMemberInformation()
     }
 
-    fun chosenMember(chosenMember: String){
-        memberDisplayed = Transformations.map(repository.allPartiesMembers){
-            it.filter { (it.firstname+" "+ it.lastname) == chosenMember }
-        }
-    }
     fun getMemberInformation(){
         viewModelScope.launch {
             try {

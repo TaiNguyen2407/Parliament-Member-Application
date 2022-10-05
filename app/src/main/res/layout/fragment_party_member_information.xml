@@ -6,77 +6,128 @@
     android:layout_height="match_parent"
     tools:context=".fragments.PartyMemberInformation">
 
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="219dp"
-        android:layout_height="237dp"
+        android:layout_width="340dp"
+        android:layout_height="241dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.053"
+        app:layout_constraintVertical_bias="0.014"
         tools:src="@tools:sample/avatars" />
-
 
     <TextView
         android:id="@+id/fullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fullName"
+        android:background="#D3D3D3"
+        android:padding="5dp"
+        android:text="testing"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.109" />
+        app:layout_constraintVertical_bias="0.046" />
 
     <TextView
         android:id="@+id/party"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="party"
+        android:background="#D3D3D3"
+        android:padding="5dp"
+        android:text="testing"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullName"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintVertical_bias="0.048" />
 
     <TextView
         android:id="@+id/hetekaid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
-        android:text="ID"
+        android:background="#D3D3D3"
+        android:padding="5dp"
+        android:text="testing"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/party"
-        app:layout_constraintVertical_bias="0.35" />
+        app:layout_constraintVertical_bias="0.093" />
 
     <TextView
         android:id="@+id/seatNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="seatNumber"
+        android:background="#D3D3D3"
+        android:padding="5dp"
+        android:text="testing"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hetekaid"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintVertical_bias="0.078" />
 
-    <TextView
-        android:id="@+id/grade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="grade"
+    <ImageButton
+        android:id="@+id/likeButton"
+        android:layout_width="95dp"
+        android:layout_height="66dp"
+        android:scaleType="centerInside"
+        android:src="?attr/actionModeCutDrawable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seatNumber"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.872" />
+
+    <ImageButton
+        android:id="@+id/dislikeButton"
+        android:layout_width="97dp"
+        android:layout_height="68dp"
+        android:scaleType="centerInside"
+        android:src="?attr/actionModePasteDrawable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.866"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.871" />
+
+    <TextView
+        android:id="@+id/likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likeButton"
+        app:layout_constraintVertical_bias="0.313" />
+
+    <TextView
+        android:id="@+id/dislikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.861"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dislikeButton"
+        app:layout_constraintVertical_bias="0.313" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

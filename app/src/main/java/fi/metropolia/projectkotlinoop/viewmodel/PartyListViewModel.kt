@@ -1,14 +1,7 @@
 package fi.metropolia.projectkotlinoop
 
-import android.nfc.Tag
-import android.util.Log
 import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.viewModelFactory
 import fi.metropolia.projectkotlinoop.data.MemberDao
-import fi.metropolia.projectkotlinoop.data.ParliamentMember
-import fi.metropolia.projectkotlinoop.data.Parliarment
-import fi.metropolia.projectkotlinoop.data.Parliarment.ParliamentMembersData.members
-import fi.metropolia.projectkotlinoop.network.MemberApi
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
