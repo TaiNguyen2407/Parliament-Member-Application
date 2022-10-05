@@ -5,11 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fi.metropolia.projectkotlinoop.MemberApplication
+import fi.metropolia.projectkotlinoop.R
 import fi.metropolia.projectkotlinoop.adapter.PartyMemberListAdapter
 import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import fi.metropolia.projectkotlinoop.databinding.FragmentPartyMemberListBinding
@@ -30,7 +35,6 @@ class PartyMemberList : Fragment() {
             (activity?.application as MemberApplication).database.memberDao()
         )
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

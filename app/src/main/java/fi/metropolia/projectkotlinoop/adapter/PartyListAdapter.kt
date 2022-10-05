@@ -41,13 +41,14 @@ class PartyListAdapter: ListAdapter<String, PartyListAdapter.PartyListViewHolder
     }
 
     override fun onBindViewHolder(holder: PartyListViewHolder, position: Int) {
+        val chosenParty = getItem(position)
         holder.itemView.findViewById<Button>(R.id.button_item).text =
-            getItem(position)
+            chosenParty
 
         //send selected party to PartyMemberList Fragment to display party member of chosen party
         //This is origin destination, data to be sent to receiving destination
         holder.itemView.findViewById<Button>(R.id.button_item).setOnClickListener {
-            val action = PartyListDirections.actionPartyListToPartyMemberList(getItem(position))
+            val action = PartyListDirections.actionPartyListToPartyMemberList(chosenParty)
             holder.itemView.findNavController().navigate(action)
         }
 

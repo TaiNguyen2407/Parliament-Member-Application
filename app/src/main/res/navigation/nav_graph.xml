@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/partyList">
 
     <fragment
         android:id="@+id/partyList"
@@ -42,7 +42,7 @@
             app:destination="@id/partyMemberList" />
         <argument
             android:name="chosenMember"
-            app:argType="string" />
+            app:argType="fi.metropolia.projectkotlinoop.data.ParliamentMember" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"

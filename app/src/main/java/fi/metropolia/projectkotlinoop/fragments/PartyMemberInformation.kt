@@ -5,21 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.navArgs
 import fi.metropolia.projectkotlinoop.MemberApplication
-import fi.metropolia.projectkotlinoop.R
+import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import fi.metropolia.projectkotlinoop.databinding.FragmentPartyMemberInformationBinding
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberInformationViewModel
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberInformationViewModelFactory
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -27,7 +20,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class PartyMemberInformation : Fragment() {
-    // TODO: Rename and change types of parameters
     private var binding: FragmentPartyMemberInformationBinding? = null
     private lateinit var chosenMember: String
     private val safeArgs: PartyMemberInformationArgs by navArgs()
@@ -38,14 +30,11 @@ class PartyMemberInformation : Fragment() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            chosenMember = safeArgs.chosenMember
-        }
-
-
+        /*arguments?.let {
+            chosenMember = safeArgs.chosenMember.firstname.toString()
+        }*/
     }
 
     override fun onCreateView(
@@ -55,14 +44,27 @@ class PartyMemberInformation : Fragment() {
         // Inflate the layout for this fragment
         val fragmentPartyMemberInformationBinding = FragmentPartyMemberInformationBinding.inflate(inflater, container, false)
         binding = fragmentPartyMemberInformationBinding
+
         return fragmentPartyMemberInformationBinding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.hetekaid?.text = partyMemberInformationViewModel.hetekaIdDisplayed.toString()
-        binding?.party?.text = partyMemberInformationViewModel.partyDisplayed.toString()
+        val isMemberAMinister = safeArgs.chosenMember.minister.toString()
+        val memberFullName = safeArgs.chosenMember.firstname.uppercase()+" "+ safeArgs.chosenMember.lastname.uppercase()
+        val memberParty = safeArgs.chosenMember.party.uppercase()
+        val memberHetekaId = safeArgs.chosenMember.hetekaId.toString()
+        val memberSeatNumber = safeArgs.chosenMember.seatNumber.toString()
+
+        binding?.hetekaid?.text = "Heteka Id: " + memberHetekaId
+        binding?.party?.text = "Party: " + memberParty
+        binding?.seatNumber?.text = "Seat Number: " + memberSeatNumber
+        if((isMemberAMinister) == "true"){
+            binding?.fullName?.text = "Minister " + memberFullName
+        } else {
+            binding?.fullName?.text = memberFullName
+        }
     }
 
     override fun onDestroy() {

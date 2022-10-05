@@ -1,9 +1,12 @@
 package fi.metropolia.projectkotlinoop.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -43,12 +46,16 @@ class PartyMemberListAdapter(): ListAdapter<ParliamentMember, PartyMemberListAda
     }
 
     override fun onBindViewHolder(holder: PartyMemberListViewHolder, position: Int) {
-        holder.itemView.findViewById<Button>(R.id.button_item).text = getItem(position).firstname +" "+ getItem(position).lastname
-        /*holder.itemView.findViewById<Button>(R.id.button_item).setOnClickListener {
-            val action = PartyMemberListDirections.actionPartyMemberListToPartyMemberInformation(getItem(position))
-            holder.itemView.findNavController().navigate(action)
-        }*/
+        val chosenMember = getItem(position).firstname +" "+ getItem(position).lastname
 
+        holder.itemView.findViewById<Button>(R.id.button_item).text = chosenMember
+
+        val parliamentMember = getItem(position)
+
+        holder.itemView.findViewById<Button>(R.id.button_item).setOnClickListener {
+            val action = PartyMemberListDirections.actionPartyMemberListToPartyMemberInformation(parliamentMember)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
 }
