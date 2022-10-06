@@ -1,9 +1,7 @@
 package fi.metropolia.projectkotlinoop
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import fi.metropolia.projectkotlinoop.data.MemberDao
-import fi.metropolia.projectkotlinoop.data.ParliamentMember
+import fi.metropolia.projectkotlinoop.data.*
 import fi.metropolia.projectkotlinoop.network.MemberApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,7 +9,6 @@ import kotlinx.coroutines.withContext
 class MemberRepository(private val memberDao: MemberDao) {
 
     val allPartiesMembers: LiveData<List<ParliamentMember>> = memberDao.getAll()
-
     //function to read database from network
     suspend fun loadDatabase() {
         withContext(Dispatchers.IO) {
@@ -19,4 +16,22 @@ class MemberRepository(private val memberDao: MemberDao) {
             memberDao.insertAll(partyResult)
         }
     }
+
+    private val dao = MemberDB.getDatabase(MemberApplication.appContext).memberLikesDao()
+
+    fun getLikesNumber(): LiveData<Int>{
+        return dao.getLikesNumber()
+    }
+
+    fun getDislikesNumber(): LiveData<Int>{
+        return dao.getDislikesNumber()
+    }
+
+    //function insert data into MemberLikes table
+    suspend fun insert(likesOrDislikes: MemberLikes){
+        dao.insert(likesOrDislikes)
+    }
+
+
+
 }

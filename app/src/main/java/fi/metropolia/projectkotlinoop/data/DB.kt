@@ -1,22 +1,19 @@
 package fi.metropolia.projectkotlinoop.data
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import fi.metropolia.projectkotlinoop.MemberRepository
-import fi.metropolia.projectkotlinoop.context.MyApp
+import fi.metropolia.projectkotlinoop.MemberApplication
 
-@Database(entities = [ParliamentMember::class], version = 2, exportSchema = false)
+@Database(entities = [ParliamentMember::class, MemberLikes::class], version = 3, exportSchema = false)
 abstract class MemberDB: RoomDatabase() {
 
     abstract fun memberDao(): MemberDao
+    abstract fun memberLikesDao(): MemberLikesDao
 
     companion object{
         @Volatile
         private var INSTANCE: MemberDB? = null
-        fun getDatabase(context: Context = MyApp.appContext): MemberDB{
+        fun getDatabase(context: Context = MemberApplication.appContext): MemberDB{
             return INSTANCE?: synchronized(this){
                 var instance = Room.databaseBuilder(
                         context,
@@ -32,20 +29,6 @@ abstract class MemberDB: RoomDatabase() {
 
 
 
-@Dao
-interface MemberDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(member: List<ParliamentMember>)
 
-    /*@Update
-    suspend fun update(comment: String)
-
-    @Delete
-    suspend fun delete(comment: String)*/
-
-    @Query("SELECT * from ParliamentMember")
-    fun getAll(): LiveData<List<ParliamentMember>>
-
-}
 
 

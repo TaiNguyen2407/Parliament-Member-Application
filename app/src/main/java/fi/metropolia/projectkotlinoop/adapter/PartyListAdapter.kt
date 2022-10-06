@@ -9,15 +9,13 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import fi.metropolia.projectkotlinoop.fragments.PartyMemberInformation
 import fi.metropolia.projectkotlinoop.R
-import fi.metropolia.projectkotlinoop.fragments.PartyList
 import fi.metropolia.projectkotlinoop.fragments.PartyListDirections
 
 
-class PartyListAdapter: ListAdapter<String, PartyListAdapter.PartyListViewHolder>(partyDiffCallBack) {
+class PartyListAdapter: ListAdapter<String, PartyListAdapter.PartyListViewHolder>(PartyDiffCallBack) {
 
-    companion object partyDiffCallBack: DiffUtil.ItemCallback<String>(){
+    companion object PartyDiffCallBack: DiffUtil.ItemCallback<String>(){
         override fun areItemsTheSame(
             oldItem: String,
             newItem: String

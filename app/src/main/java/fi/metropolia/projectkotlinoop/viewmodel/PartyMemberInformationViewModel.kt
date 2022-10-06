@@ -1,45 +1,63 @@
 package fi.metropolia.projectkotlinoop.viewmodel
 
 import androidx.lifecycle.*
+import fi.metropolia.projectkotlinoop.MemberApplication
 import fi.metropolia.projectkotlinoop.MemberRepository
-import fi.metropolia.projectkotlinoop.data.MemberDao
-import fi.metropolia.projectkotlinoop.data.ParliamentMember
-import fi.metropolia.projectkotlinoop.fragments.PartyMemberInformation
+import fi.metropolia.projectkotlinoop.data.*
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-enum class MemberApiStatus { LOADING, ERROR, DONE }
-
-
-class PartyMemberInformationViewModel(private val memberDao: MemberDao) : ViewModel(){
-    // The internal MutableLiveData that stores the status of the most recent request
+class PartyMemberInformationViewModel() : ViewModel(){
+    private val memberDao: MemberDao = MemberDB.getDatabase(MemberApplication.appContext).memberDao()
+    // The MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
-    // The external immutable LiveData for the request status
-    val status: LiveData<String> = _status
-    val repository = MemberRepository(memberDao)
-    private val _photos = MutableLiveData<ParliamentMember>()
-    val photos: LiveData<ParliamentMember> = _photos
-    lateinit var partyMemberInformation: PartyMemberInformation
+
+    private val _hetekaId = MutableLiveData<Int>()
+    val hetekaId: LiveData<Int> = _hetekaId
+
+    val memberRepository = MemberRepository(memberDao)
+
+    val likesNum: LiveData<Int> = memberRepository.getLikesNumber()
+    val dislikesNum: LiveData<Int> = memberRepository.getDislikesNumber()
+
+
+    fun setHetekaId(hetekaId: Int){
+        _hetekaId.value = hetekaId
+    }
+
+    fun insertLikesData(likesOrDislikes: MemberLikes){
+        viewModelScope.launch {
+            memberRepository.insert(likesOrDislikes)
+        }
+    }
+
     init {
         getMemberInformation()
     }
 
-    fun getMemberInformation(){
+    private fun getMemberInformation(){
         viewModelScope.launch {
             try {
-                repository.loadDatabase()
+                memberRepository.loadDatabase()
             } catch (e: Exception){
                 _status.value = "Failure ${e.message}"
             }
         }
     }
+
+
+
+
+
+
 }
 
-class PartyMemberInformationViewModelFactory(private val memberDao: MemberDao) : ViewModelProvider.Factory{
+class PartyMemberInformationViewModelFactory(): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PartyMemberInformationViewModel::class.java)){
-            return PartyMemberInformationViewModel(memberDao) as T
+            return PartyMemberInformationViewModel() as T
         }
-        throw IllegalArgumentException("Unknown Viewmodel Class")
+        throw IllegalArgumentException("Unknown ViewModel Class")
     }
+
 }

@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import fi.metropolia.projectkotlinoop.MemberApplication
-import fi.metropolia.projectkotlinoop.PartyListViewModel
-import fi.metropolia.projectkotlinoop.PartyListViewModelFactory
+import fi.metropolia.projectkotlinoop.viewmodel.PartyListViewModel
+import fi.metropolia.projectkotlinoop.viewmodel.PartyListViewModelFactory
 import fi.metropolia.projectkotlinoop.adapter.PartyListAdapter
-//import fi.metropolia.projectkotlinoop.PartyListViewModelFactory
 import fi.metropolia.projectkotlinoop.databinding.FragmentPartyListBinding
 
 
@@ -41,7 +40,7 @@ class PartyList : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var adapter = PartyListAdapter()
+        val adapter = PartyListAdapter()
 
         binding?.partyListRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
         binding?.partyListRecyclerView?.adapter = adapter

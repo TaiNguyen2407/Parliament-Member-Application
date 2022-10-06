@@ -5,18 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fi.metropolia.projectkotlinoop.MemberApplication
-import fi.metropolia.projectkotlinoop.R
 import fi.metropolia.projectkotlinoop.adapter.PartyMemberListAdapter
-import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import fi.metropolia.projectkotlinoop.databinding.FragmentPartyMemberListBinding
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberListViewModel
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberListViewModelFactory
@@ -67,6 +60,7 @@ class PartyMemberList : Fragment() {
             .observe(viewLifecycleOwner){
                 adapter.submitList(it)
             }
+
     }
     override fun onDestroy() {
         super.onDestroy()

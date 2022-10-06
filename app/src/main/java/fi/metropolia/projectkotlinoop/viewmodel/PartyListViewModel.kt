@@ -1,15 +1,15 @@
-package fi.metropolia.projectkotlinoop
+package fi.metropolia.projectkotlinoop.viewmodel
 
 import androidx.lifecycle.*
+import fi.metropolia.projectkotlinoop.MemberRepository
 import fi.metropolia.projectkotlinoop.data.MemberDao
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class PartyListViewModel(private val memberDao: MemberDao) : ViewModel() {
+class PartyListViewModel(memberDao: MemberDao) : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
     // The external immutable LiveData for the request status
-    val status: LiveData<String> = _status
 
 
     val repository = MemberRepository(memberDao)
@@ -21,7 +21,7 @@ class PartyListViewModel(private val memberDao: MemberDao) : ViewModel() {
         getParties()
     }
 
-    fun getParties(){
+    private fun getParties(){
         viewModelScope.launch {
            try {
                repository.loadDatabase()
