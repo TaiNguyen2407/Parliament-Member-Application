@@ -11,13 +11,12 @@ import timber.log.Timber
 
 class RefreshDataWorker(appContext: Context, params: WorkerParameters): CoroutineWorker(appContext, params) {
     companion object {
-        const val WORK_NAME = 
+        const val WORK_NAME = "fi.metropolia.projectkotlinoop.work.RefreshDataWorker"
     }
 
 
     override suspend fun doWork(): Result {
         val dao = MemberDB.getDatabase(MemberApplication.appContext).memberDao()
-        val database = MemberApplication.appContext
         val repository = MemberRepository(dao)
 
         try {
