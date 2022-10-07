@@ -32,7 +32,7 @@ class MemberApplication: Application() {
     /**
      * Setup WorkManager background job to 'fetch' new network data daily.
      */
-    val applicationScope = CoroutineScope(Dispatchers.Default)
+    private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     private fun delayedInit(){
         applicationScope.launch {

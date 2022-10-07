@@ -20,7 +20,7 @@ import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberListViewModelFactory
  */
 class PartyMemberList : Fragment() {
     private var binding: FragmentPartyMemberListBinding? = null
-    //Declare lateinit var for argument sent from PartyList Fragment (origin destination)
+    //Declare late init var for argument sent from PartyList Fragment (origin destination)
     private lateinit var chosenParty: String
     //Safe Args used to received argument sent from origin destination
     private val safeArgs: PartyMemberListArgs by navArgs()

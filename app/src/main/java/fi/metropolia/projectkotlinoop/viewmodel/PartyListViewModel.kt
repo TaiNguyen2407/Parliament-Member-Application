@@ -15,9 +15,9 @@ class PartyListViewModel(memberDao: MemberDao) : ViewModel() {
     private val _status = MutableLiveData<String>()
 
     //Get instance of repository
-    val repository = MemberRepository(memberDao)
+    private val repository = MemberRepository(memberDao)
 
-    //Mapping from databse a list of party that is same as selected party from user
+    //Mapping from database a list of party that is same as selected party from user
     val partyDisplayed: LiveData<List<String>> = Transformations.map(repository.allPartiesMembers){
             list -> list.map {it.party}.toSet().toList()
     }

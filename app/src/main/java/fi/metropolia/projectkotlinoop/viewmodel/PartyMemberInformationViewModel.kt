@@ -7,15 +7,14 @@ import fi.metropolia.projectkotlinoop.data.*
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class PartyMemberInformationViewModel() : ViewModel(){
+class PartyMemberInformationViewModel: ViewModel(){
     private val memberDao: MemberDao = MemberDB.getDatabase(MemberApplication.appContext).memberDao()
     // The MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
 
     private val _hetekaId = MutableLiveData<Int>()
-    val hetekaId: LiveData<Int> = _hetekaId
 
-    val memberRepository = MemberRepository(memberDao)
+    private val memberRepository = MemberRepository(memberDao)
 
     val likesNum: LiveData<Int> = memberRepository.getLikesNumber()
     val dislikesNum: LiveData<Int> = memberRepository.getDislikesNumber()
@@ -44,15 +43,9 @@ class PartyMemberInformationViewModel() : ViewModel(){
             }
         }
     }
-
-
-
-
-
-
 }
 
-class PartyMemberInformationViewModelFactory(): ViewModelProvider.Factory{
+class PartyMemberInformationViewModelFactory: ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PartyMemberInformationViewModel::class.java)){
             return PartyMemberInformationViewModel() as T

@@ -18,7 +18,7 @@ abstract class MemberDB: RoomDatabase() {
         private var INSTANCE: MemberDB? = null
         fun getDatabase(context: Context = MemberApplication.appContext): MemberDB{
             return INSTANCE?: synchronized(this){
-                var instance = Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                         context,
                         MemberDB::class.java,
                         "member_database"

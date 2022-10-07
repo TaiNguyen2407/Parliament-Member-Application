@@ -17,7 +17,7 @@ class PartyMemberListViewModel(memberDao: MemberDao) : ViewModel() {
     private val _status = MutableLiveData<String>()
 
     //Get instance of repository
-    val repository = MemberRepository(memberDao)
+    private val repository = MemberRepository(memberDao)
 
     lateinit var memberDisplayed: LiveData<List<ParliamentMember>>
 
@@ -32,7 +32,7 @@ class PartyMemberListViewModel(memberDao: MemberDao) : ViewModel() {
         getMembers()
     }
 
-    //Function that runs in viewmodel/Coroutine Scope that loads database from internet
+    //Function that runs in view model/Coroutine Scope that loads database from internet
     private fun getMembers(){
         viewModelScope.launch {
             try {

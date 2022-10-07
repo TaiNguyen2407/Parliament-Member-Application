@@ -15,7 +15,7 @@ import fi.metropolia.projectkotlinoop.data.MemberLikes
 import fi.metropolia.projectkotlinoop.databinding.FragmentPartyMemberInformationBinding
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberInformationViewModel
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberInformationViewModelFactory
-import java.util.*
+
 
 /**
  * A Fragment that shows selected member basic information
@@ -26,7 +26,7 @@ class PartyMemberInformation : Fragment() {
     //Initializing Safe Args to receive selected member sent from PartyMemberList Fragment (origin destination)
     private val safeArgs: PartyMemberInformationArgs by navArgs()
     //Initialize View Model
-    val partyMemberInformationViewModel: PartyMemberInformationViewModel by viewModels {
+    private val partyMemberInformationViewModel: PartyMemberInformationViewModel by viewModels {
         PartyMemberInformationViewModelFactory()
     }
     private var isDislikeSelected = false
@@ -111,7 +111,7 @@ class PartyMemberInformation : Fragment() {
                 partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner) {
                     binding?.likes?.text = it.inc().toString()
                 }
-                if (isDislikeSelected == true) {
+                if (isDislikeSelected) {
                     binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_unselected)
                     binding?.dislikes?.setTextColor(Color.GRAY)
                     partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
@@ -132,7 +132,7 @@ class PartyMemberInformation : Fragment() {
                 partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
                     binding?.dislikes?.text = it.inc().toString()
                 }
-                if (isLikeSelected == true) {
+                if (isLikeSelected) {
                     binding?.likeButton?.setImageResource(R.drawable.thumbs_up_unselected)
                     binding?.likes?.setTextColor(Color.GRAY)
                     partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner) {
