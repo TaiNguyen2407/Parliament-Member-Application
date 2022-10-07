@@ -12,9 +12,7 @@ import fi.metropolia.projectkotlinoop.databinding.FragmentStartBinding
 import kotlin.system.exitProcess
 
 /**
- * A simple [Fragment] subclass.
- * Use the [StartApp.newInstance] factory method to
- * create an instance of this fragment.
+ * A simple Starting Fragment.
  */
 class StartApp : Fragment() {
     private var binding: FragmentStartBinding? = null
@@ -33,14 +31,17 @@ class StartApp : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Set navigation
         binding?.apply {
+            //Set destination after clicking Start button on starting screen
+            //Destination will be Party List Fragment
             startButton.setOnClickListener {
                 findNavController().navigate(R.id.action_startFragment_to_partyList)
             }
+            //Set action to quit the application whenever user click at Quit button on starting screen
             quitButton.setOnClickListener {
                 Toast.makeText(requireContext(), "App Closed", Toast.LENGTH_SHORT).show()
                 exitProcess(0)
-
             }
         }
     }

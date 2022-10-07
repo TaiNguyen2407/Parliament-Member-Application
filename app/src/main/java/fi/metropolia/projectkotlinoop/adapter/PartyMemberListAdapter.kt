@@ -12,7 +12,9 @@ import fi.metropolia.projectkotlinoop.R
 import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import fi.metropolia.projectkotlinoop.fragments.PartyMemberListDirections
 
-
+/**
+ * Adapter class or PartyMemberList Fragment
+ */
 class PartyMemberListAdapter: ListAdapter<ParliamentMember, PartyMemberListAdapter.PartyMemberListViewHolder>(
     PartyMemberDiffCallBack
 ) {
@@ -42,12 +44,15 @@ class PartyMemberListAdapter: ListAdapter<ParliamentMember, PartyMemberListAdapt
     }
 
     override fun onBindViewHolder(holder: PartyMemberListViewHolder, position: Int) {
+        //Setting chosen member name to display (with first name + last name)
         val chosenMember = getItem(position).firstname +" "+ getItem(position).lastname
 
         holder.itemView.findViewById<Button>(R.id.button_item).text = chosenMember
 
         val parliamentMember = getItem(position)
 
+        //send selected member to PartyMemberInformation Fragment to display party member of chosen party
+        // This is origin destination, data to be sent to receiving destination
         holder.itemView.findViewById<Button>(R.id.button_item).setOnClickListener {
             val action = PartyMemberListDirections.actionPartyMemberListToPartyMemberInformation(parliamentMember)
             holder.itemView.findNavController().navigate(action)

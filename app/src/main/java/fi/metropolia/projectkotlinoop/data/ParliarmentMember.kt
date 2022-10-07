@@ -5,7 +5,11 @@ import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-
+/**
+ * Entity and Dao used for Parliament Member
+ * Data will be fetched/sent from/to the server
+ * Parcelable add in order to implement sending an object from a fragment to another
+ */
 @Entity
 data class ParliamentMember(
         @PrimaryKey

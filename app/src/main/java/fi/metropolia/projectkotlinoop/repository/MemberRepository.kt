@@ -1,14 +1,22 @@
-package fi.metropolia.projectkotlinoop
+package fi.metropolia.projectkotlinoop.repository
 
 import androidx.lifecycle.LiveData
+import fi.metropolia.projectkotlinoop.context.MemberApplication
 import fi.metropolia.projectkotlinoop.data.*
 import fi.metropolia.projectkotlinoop.network.MemberApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MemberRepository(private val memberDao: MemberDao) {
+/**
+ * Repository Class implemented to decide whether to fetch data from internet or local storage
+ * Makes it easier and more structural for debugging
+ */
 
+class MemberRepository(private val memberDao: MemberDao) {
+    //Get instance of Dao for Likes/Dislikes Feature
+    private val dao = MemberDB.getDatabase(MemberApplication.appContext).memberLikesDao()
     val allPartiesMembers: LiveData<List<ParliamentMember>> = memberDao.getAll()
+
     //function to read database from network
     suspend fun loadDatabase() {
         withContext(Dispatchers.IO) {
@@ -17,7 +25,6 @@ class MemberRepository(private val memberDao: MemberDao) {
         }
     }
 
-    private val dao = MemberDB.getDatabase(MemberApplication.appContext).memberLikesDao()
 
     fun getLikesNumber(): LiveData<Int>{
         return dao.getLikesNumber()

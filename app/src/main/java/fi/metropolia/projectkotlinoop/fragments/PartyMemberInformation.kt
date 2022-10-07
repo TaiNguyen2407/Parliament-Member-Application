@@ -6,39 +6,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import fi.metropolia.projectkotlinoop.MemberApplication
 import fi.metropolia.projectkotlinoop.R
 import fi.metropolia.projectkotlinoop.data.MemberLikes
 import fi.metropolia.projectkotlinoop.databinding.FragmentPartyMemberInformationBinding
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberInformationViewModel
 import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberInformationViewModelFactory
-import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberListViewModel
-import fi.metropolia.projectkotlinoop.viewmodel.PartyMemberListViewModelFactory
-import java.lang.reflect.Member
 import java.util.*
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 /**
- * A simple [Fragment] subclass.
- * Use the [PartyMemberInformation.newInstance] factory method to
- * create an instance of this fragment.
+ * A Fragment that shows selected member basic information
+ * It also shows the like/dislike that user give to mentioned member
  */
 class PartyMemberInformation : Fragment() {
     private var binding: FragmentPartyMemberInformationBinding? = null
+    //Initializing Safe Args to receive selected member sent from PartyMemberList Fragment (origin destination)
     private val safeArgs: PartyMemberInformationArgs by navArgs()
+    //Initialize View Model
     val partyMemberInformationViewModel: PartyMemberInformationViewModel by viewModels {
         PartyMemberInformationViewModelFactory()
     }
+    private var isDislikeSelected = false
+    private var isLikeSelected = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,8 +46,12 @@ class PartyMemberInformation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /**
+         * Block of initializations are just to easier set content of select item in XML file
+         */
         val isMemberAMinister = safeArgs.chosenMember.minister.toString()
-        val memberFullName = safeArgs.chosenMember.firstname.uppercase() + " " + safeArgs.chosenMember.lastname.uppercase()
+        val memberFullName =
+            safeArgs.chosenMember.firstname.uppercase() + " " + safeArgs.chosenMember.lastname.uppercase()
         val memberParty = safeArgs.chosenMember.party.uppercase()
         val memberHetekaId = safeArgs.chosenMember.hetekaId.toString()
         val memberSeatNumber = safeArgs.chosenMember.seatNumber.toString()
@@ -83,76 +80,69 @@ class PartyMemberInformation : Fragment() {
         }
 
 
-
-        binding?.likeButton?.setImageResource(R.drawable.thumbs_up_unselected)
-
-        binding?.likeButton?.setOnClickListener {
-            //Toast.makeText(requireContext(), "You liked member: $memberFullName", Toast.LENGTH_SHORT).show()
-            partyMemberInformationViewModel.insertLikesData(MemberLikes(memberHetekaId.toInt(), 0, 0, 1))
-        }
-
-
-        binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_unselected)
-
-        binding?.dislikeButton?.setOnClickListener {
-            //Toast.makeText(requireContext(), "You disliked member: ${memberFullName}", Toast.LENGTH_SHORT).show()
-            partyMemberInformationViewModel
-                .insertLikesData(MemberLikes(memberHetekaId.toInt(), 0, 0, -1))
-        }
-
+        /**
+         *Code block is to implement likes/dislikes features in Member Fragment
+         * Feature will show like/dislike numbers of each member
+         * Mirroring Facebook/Youtube like feature.
+         */
+        //Set HetekaId for selected member
         partyMemberInformationViewModel.setHetekaId(memberHetekaId.toInt())
 
-        partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner){
+        partyMemberInformationViewModel.insertLikesData(MemberLikes(memberHetekaId.toInt(), 0, 0))
+
+        //Observe pattern for number of likes shown on UI
+        partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner) {
             binding?.likes?.text = it.toString()
         }
-        partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner){
+        //Observe pattern for number of dislikes shown on UI
+        partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
             binding?.dislikes?.text = it.toString()
         }
 
+        //Set like button image
+        binding?.likeButton?.setImageResource(R.drawable.thumbs_up_unselected)
 
-    }
-
-    /*private fun updateLikeStatus() {
-        if (isDislikeSelected == true) {
-            binding?.likeButton?.isEnabled = false
-            binding?.likeButton?.isClickable = false
-        } else{
-            binding?.likeButton?.setOnClickListener {
-                if (!isLikeSelected) {
-                    isLikeSelected = true
-                    binding?.likeButton?.setImageResource(R.drawable.thumbs_up_selected)
-                    binding?.likes?.setTextColor(Color.BLUE)
-                    binding?.likes?.text = numLikes.toInt().inc().toString()
-                } else {
-                    isLikeSelected = false
-                    binding?.likeButton?.setImageResource(R.drawable.thumbs_up_unselected)
-                    binding?.likes?.setTextColor(Color.GRAY)
-                    binding?.likes?.text = numLikes
+        //Set click listener for Like button
+        binding?.likeButton?.setOnClickListener {
+            if (!isLikeSelected) {
+                isLikeSelected = true
+                binding?.likeButton?.setImageResource(R.drawable.thumbs_up_selected)
+                binding?.likes?.setTextColor(Color.BLUE)
+                partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner) {
+                    binding?.likes?.text = it.inc().toString()
                 }
-            }
-        }
-    }
-    private fun updateDislikeStatus() {
-        if (isLikeSelected == true) {
-            binding?.dislikeButton?.isEnabled = false
-            binding?.dislikeButton?.isClickable = false
-        } else{
-            binding?.dislikeButton?.setOnClickListener {
-                if (!isDislikeSelected) {
-                    isDislikeSelected = true
-                    binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_selected)
-                    binding?.dislikes?.setTextColor(Color.BLUE)
-                    binding?.dislikes?.text = numDislikes.toInt().dec().toString()
-                } else {
-                    isDislikeSelected = false
+                if (isDislikeSelected == true) {
                     binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_unselected)
                     binding?.dislikes?.setTextColor(Color.GRAY)
-                    binding?.dislikes?.text = numDislikes
+                    partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
+                        binding?.dislikes?.text = it.toString()
+                    }
                 }
-
             }
+
         }
-    }*/
+        //Set dislike button Image
+        binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_unselected)
+
+        binding?.dislikeButton?.setOnClickListener {
+            if (!isDislikeSelected) {
+                isDislikeSelected = true
+                binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_selected)
+                binding?.dislikes?.setTextColor(Color.BLUE)
+                partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
+                    binding?.dislikes?.text = it.inc().toString()
+                }
+                if (isLikeSelected == true) {
+                    binding?.likeButton?.setImageResource(R.drawable.thumbs_up_unselected)
+                    binding?.likes?.setTextColor(Color.GRAY)
+                    partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner) {
+                        binding?.likes?.text = it.toString()
+                    }
+                }
+            }
+
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

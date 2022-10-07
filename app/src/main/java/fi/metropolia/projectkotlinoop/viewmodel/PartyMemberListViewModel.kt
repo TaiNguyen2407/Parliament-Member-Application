@@ -1,23 +1,27 @@
 package fi.metropolia.projectkotlinoop.viewmodel
 
 import androidx.lifecycle.*
-import fi.metropolia.projectkotlinoop.MemberRepository
+import fi.metropolia.projectkotlinoop.repository.MemberRepository
 import fi.metropolia.projectkotlinoop.data.MemberDao
 import fi.metropolia.projectkotlinoop.data.ParliamentMember
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 
+/**
+ * ViewModel class implemented to sent data from repository to UI Fragments
+ */
+
 class PartyMemberListViewModel(memberDao: MemberDao) : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
-    // The external immutable LiveData for the request status
 
+    //Get instance of repository
     val repository = MemberRepository(memberDao)
 
     lateinit var memberDisplayed: LiveData<List<ParliamentMember>>
 
-
+    //Function to filter member that is same as selected member from user
     fun chosenParty(chosenParty: String) {
         memberDisplayed = Transformations.map(repository.allPartiesMembers){ list ->
             list.filter { it.party == chosenParty }
@@ -28,6 +32,7 @@ class PartyMemberListViewModel(memberDao: MemberDao) : ViewModel() {
         getMembers()
     }
 
+    //Function that runs in viewmodel/Coroutine Scope that loads database from internet
     private fun getMembers(){
         viewModelScope.launch {
             try {

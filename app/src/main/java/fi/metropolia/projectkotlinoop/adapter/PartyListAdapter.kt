@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import fi.metropolia.projectkotlinoop.R
 import fi.metropolia.projectkotlinoop.fragments.PartyListDirections
 
-
+/**
+ * Adapter class for PartyList Fragment
+ */
 class PartyListAdapter: ListAdapter<String, PartyListAdapter.PartyListViewHolder>(PartyDiffCallBack) {
 
     companion object PartyDiffCallBack: DiffUtil.ItemCallback<String>(){
@@ -44,7 +46,7 @@ class PartyListAdapter: ListAdapter<String, PartyListAdapter.PartyListViewHolder
             chosenParty
 
         //send selected party to PartyMemberList Fragment to display party member of chosen party
-        //This is origin destination, data to be sent to receiving destination
+        // This is origin destination, data to be sent to receiving destination
         holder.itemView.findViewById<Button>(R.id.button_item).setOnClickListener {
             val action = PartyListDirections.actionPartyListToPartyMemberList(chosenParty)
             holder.itemView.findNavController().navigate(action)

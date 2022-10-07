@@ -3,7 +3,10 @@ package fi.metropolia.projectkotlinoop.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-
+/**
+ *Entity and Dao class for Likes/Dislikes feature
+ * Data will be stored inside of user's device, not fetch/send from/to the server
+ */
 
 @Entity
 data class MemberLikes(
@@ -11,7 +14,6 @@ data class MemberLikes(
     val hetekaId: Int,
     val likesNumber: Int ,
     val dislikeNumber: Int,
-    val amount: Int
 )
 
 @Dao
@@ -27,8 +29,5 @@ interface MemberLikesDao {
 
     @Query("SELECT dislikeNumber from MemberLikes order by hetekaId")
     fun getDislikesNumber(): LiveData<Int>
-
-    @Query("SELECT likesNumber from MemberLikes")
-    fun getLikesNumberInc(): Int
 
 }

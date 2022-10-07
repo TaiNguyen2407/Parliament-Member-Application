@@ -1,8 +1,7 @@
-package fi.metropolia.projectkotlinoop
+package fi.metropolia.projectkotlinoop.context
 
 import android.app.Application
 import android.content.Context
-import android.os.Build
 import androidx.work.*
 import fi.metropolia.projectkotlinoop.data.MemberDB
 import fi.metropolia.projectkotlinoop.work.RefreshDataWorker
@@ -11,6 +10,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+
+/**
+ * Fragment created to harness context of application
+ */
 
 class MemberApplication: Application() {
     val database: MemberDB by lazy { MemberDB.getDatabase(this) }

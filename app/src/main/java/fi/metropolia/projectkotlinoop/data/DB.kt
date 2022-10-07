@@ -2,9 +2,12 @@ package fi.metropolia.projectkotlinoop.data
 
 import android.content.Context
 import androidx.room.*
-import fi.metropolia.projectkotlinoop.MemberApplication
+import fi.metropolia.projectkotlinoop.context.MemberApplication
 
-@Database(entities = [ParliamentMember::class, MemberLikes::class], version = 3, exportSchema = false)
+/**
+ * Database class used to build database and add entities
+ */
+@Database(entities = [ParliamentMember::class, MemberLikes::class], version = 4, exportSchema = false)
 abstract class MemberDB: RoomDatabase() {
 
     abstract fun memberDao(): MemberDao

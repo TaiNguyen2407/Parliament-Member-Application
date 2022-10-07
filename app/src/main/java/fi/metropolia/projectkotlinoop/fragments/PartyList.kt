@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import fi.metropolia.projectkotlinoop.MemberApplication
+import fi.metropolia.projectkotlinoop.context.MemberApplication
 import fi.metropolia.projectkotlinoop.viewmodel.PartyListViewModel
 import fi.metropolia.projectkotlinoop.viewmodel.PartyListViewModelFactory
 import fi.metropolia.projectkotlinoop.adapter.PartyListAdapter
@@ -15,13 +15,11 @@ import fi.metropolia.projectkotlinoop.databinding.FragmentPartyListBinding
 
 
 /**
- * A simple [Fragment] subclass.
- * Use the [PartyList.newInstance] factory method to
- * create an instance of this fragment.
+ * A simple PartyList Fragment.
  */
 class PartyList : Fragment() {
-    // TODO: Rename and change types of parameters
     private var binding: FragmentPartyListBinding? = null
+    //Initialize View Model
     private val partyListViewModel: PartyListViewModel by activityViewModels {
         PartyListViewModelFactory(
             (activity?.application as MemberApplication).database.memberDao()
@@ -33,7 +31,8 @@ class PartyList : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val fragmentPartyListBinding = FragmentPartyListBinding.inflate(inflater, container, false)
+        val fragmentPartyListBinding = FragmentPartyListBinding
+            .inflate(inflater, container, false)
         binding = fragmentPartyListBinding
         return fragmentPartyListBinding.root
     }
@@ -42,15 +41,15 @@ class PartyList : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = PartyListAdapter()
 
+        //Set Layout Manager of Recycler view
         binding?.partyListRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
+        //Set adapter for recycler view
         binding?.partyListRecyclerView?.adapter = adapter
 
         //Code for observe pattern
-        partyListViewModel.partyDisplayed
-            .observe(viewLifecycleOwner){
+        partyListViewModel.partyDisplayed.observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
-
     }
 
     override fun onDestroyView() {

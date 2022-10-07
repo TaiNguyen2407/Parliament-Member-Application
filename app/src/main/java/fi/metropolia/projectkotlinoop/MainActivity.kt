@@ -7,6 +7,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import fi.metropolia.projectkotlinoop.databinding.ActivityMainBinding
 
+/**
+ * Main Activity
+ */
+
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
@@ -16,10 +20,12 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Set navigation fragment manager by connecting manager to navigation graph
         val navHostFragment = supportFragmentManager.
         findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        //Set up action bar to go back to previous fragment whenever clicked
         setupActionBarWithNavController(navController)
 
 

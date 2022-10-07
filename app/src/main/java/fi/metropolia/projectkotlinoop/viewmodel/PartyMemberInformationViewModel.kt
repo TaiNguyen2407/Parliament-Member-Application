@@ -1,8 +1,8 @@
 package fi.metropolia.projectkotlinoop.viewmodel
 
 import androidx.lifecycle.*
-import fi.metropolia.projectkotlinoop.MemberApplication
-import fi.metropolia.projectkotlinoop.MemberRepository
+import fi.metropolia.projectkotlinoop.context.MemberApplication
+import fi.metropolia.projectkotlinoop.repository.MemberRepository
 import fi.metropolia.projectkotlinoop.data.*
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
