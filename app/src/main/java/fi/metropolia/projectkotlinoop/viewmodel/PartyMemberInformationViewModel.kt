@@ -12,18 +12,12 @@ class PartyMemberInformationViewModel: ViewModel(){
     // The MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
 
-    private val _hetekaId = MutableLiveData<Int>()
-
     private val memberRepository = MemberRepository(memberDao)
 
     val likesNum: LiveData<Int> = memberRepository.getLikesNumber()
     val dislikesNum: LiveData<Int> = memberRepository.getDislikesNumber()
 
-
-    fun setHetekaId(hetekaId: Int){
-        _hetekaId.value = hetekaId
-    }
-
+    //Function used to insert initial likes and dislikes number each member have, which is 0
     fun insertLikesData(likesOrDislikes: MemberLikes){
         viewModelScope.launch {
             memberRepository.insert(likesOrDislikes)
@@ -33,7 +27,7 @@ class PartyMemberInformationViewModel: ViewModel(){
     init {
         getMemberInformation()
     }
-
+    //Function to load Member Information based on JSON file on internet/server
     private fun getMemberInformation(){
         viewModelScope.launch {
             try {

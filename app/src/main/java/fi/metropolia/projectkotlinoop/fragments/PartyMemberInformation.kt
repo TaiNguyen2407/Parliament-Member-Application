@@ -29,7 +29,9 @@ class PartyMemberInformation : Fragment() {
     private val partyMemberInformationViewModel: PartyMemberInformationViewModel by viewModels {
         PartyMemberInformationViewModelFactory()
     }
+    //Dislike state at first is false, if user clicks on button, it turns to true
     private var isDislikeSelected = false
+    //Like state at first is false, if user clicks on button, it turns to true
     private var isLikeSelected = false
 
 
@@ -85,9 +87,7 @@ class PartyMemberInformation : Fragment() {
          * Feature will show like/dislike numbers of each member
          * Mirroring Facebook/Youtube like feature.
          */
-        //Set HetekaId for selected member
-        partyMemberInformationViewModel.setHetekaId(memberHetekaId.toInt())
-
+        //Insert initial like/dislike data (which is 0) to selected member
         partyMemberInformationViewModel.insertLikesData(MemberLikes(memberHetekaId.toInt(), 0, 0))
 
         //Observe pattern for number of likes shown on UI
@@ -98,49 +98,74 @@ class PartyMemberInformation : Fragment() {
         partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
             binding?.dislikes?.text = it.toString()
         }
-
-        //Set like button image
+        /**
+         * Block of code below implemented following feature:
+         * When user click like button, number of likes turns from 0 to 1
+         * Like icon changes from white image and black number to black image and blue number
+         * It indicates that the like button has been clicked and database has been notified
+         * However, when user changes his/her mind, to dislike selected member
+         * He/she can click dislike button and dislike number and icon will change same way as like button did
+         * The feature is created so that user can only like or dislike a member, there is no possibility to like and dislike a member at the same time
+         * Also the feature allows 1 like / 1 dislike person
+         * It imitates Like feature in Facebook UX
+         */
+        //Set initial like button image/state
         binding?.likeButton?.setImageResource(R.drawable.thumbs_up_unselected)
 
         //Set click listener for Like button
         binding?.likeButton?.setOnClickListener {
+            //If like is clicked, then set to true
             if (!isLikeSelected) {
                 isLikeSelected = true
+                //Set like button image to black like image
                 binding?.likeButton?.setImageResource(R.drawable.thumbs_up_selected)
+                //Set color of like number to blue -> indicated has been clicked
                 binding?.likes?.setTextColor(Color.BLUE)
+                //Observe and update regularly the like number when user clicks (plus 1)
                 partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner) {
                     binding?.likes?.text = it.inc().toString()
                 }
+
+                //If like button is clicked
                 if (isDislikeSelected) {
+                    //Immediately set the dislike button to unselected
                     binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_unselected)
+                    //Set dislike number to gray color
                     binding?.dislikes?.setTextColor(Color.GRAY)
+                    //Observe and update dislike number
                     partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
                         binding?.dislikes?.text = it.toString()
                     }
                 }
             }
-
         }
-        //Set dislike button Image
+        //Set initial dislike button Image/state
         binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_unselected)
 
         binding?.dislikeButton?.setOnClickListener {
+            //If dislike is clicked, then set to true
             if (!isDislikeSelected) {
                 isDislikeSelected = true
+                //Set dislike button image to black like image
                 binding?.dislikeButton?.setImageResource(R.drawable.thumbs_down_selected)
+                //Set color of dislike number to blue -> Indicate has been click
                 binding?.dislikes?.setTextColor(Color.BLUE)
+                //Observe and update regularly the dislike number when user clicks (plus 1)
                 partyMemberInformationViewModel.dislikesNum.observe(viewLifecycleOwner) {
                     binding?.dislikes?.text = it.inc().toString()
                 }
+                //Check if like button is clicked, if yes
                 if (isLikeSelected) {
+                    //Immediately set the like button unselected
                     binding?.likeButton?.setImageResource(R.drawable.thumbs_up_unselected)
+                    //Set like number to gray color
                     binding?.likes?.setTextColor(Color.GRAY)
+                    //Observe and update like numbers
                     partyMemberInformationViewModel.likesNum.observe(viewLifecycleOwner) {
                         binding?.likes?.text = it.toString()
                     }
                 }
             }
-
         }
     }
 
