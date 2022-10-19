@@ -1,4 +1,4 @@
-# This is a project under Metropolia University of Applied Sciences scope 
+# Finnish Parliament Member Android Application 
 ## Course: ICT21-M Object Oriented-Programming
 ### Language: Kotlin
 
